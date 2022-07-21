@@ -1,4 +1,4 @@
-import { Injectable, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as AWS from 'aws-sdk';
@@ -36,7 +36,7 @@ export class ProviderService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} provider`;
+    return this.providerRepository.findOne(id);
   }
 
   update(id: number, updateProviderDto: UpdateProviderDto) {

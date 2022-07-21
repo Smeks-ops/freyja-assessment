@@ -42,14 +42,14 @@ class FileExtender implements NestInterceptor {
   }
 }
 @ApiTags('provider')
-@Controller('create')
+@Controller('provider')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ProviderController {
   constructor(private readonly providerService: ProviderService) {}
 
   @ApiOkResponse({
-    description: 'Return created menu',
+    description: 'Returns created game provider',
     type: CreateProviderDto,
   })
   @Post()

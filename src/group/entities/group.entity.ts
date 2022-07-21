@@ -10,8 +10,8 @@ import {
 
 @Entity()
 export class Group {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 300, nullable: false })
   name: string;

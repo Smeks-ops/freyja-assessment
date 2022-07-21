@@ -6,19 +6,30 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { AuthUser } from 'src/auth/auth.decorator';
+import { User } from 'src/users/entities/users.entity';
+import { plainToClass } from 'class-transformer';
 
 @ApiTags('group')
 @Controller('group')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
+  @ApiOkResponse({
+    description: 'Creates a new group',
+  })
   @Post()
-  create(@Body() createGroupDto: CreateGroupDto) {
+  createAdmin(@Body() createGroupDto: CreateGroupDto) {
     return this.groupService.create(createGroupDto);
   }
 
@@ -40,5 +51,12 @@ export class GroupController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.groupService.remove(+id);
+  }
+
+  async handleRestriction(user: User) {
+    if (user.userRole === 'player')
+      throw new BadRequestException(
+        'Sorry, only an admin can perform this action',
+      );
   }
 }
