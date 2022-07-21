@@ -1,7 +1,7 @@
 # Freyja-assessment Server
 
 ## Run in SwaggerUI
-# https://.herokuapp.com/api/v1/docs/#/
+# https://freyja-game-app.herokuapp.com/api/v1/docs/
 ## Getting the App Locally
 
 1. Clone this repository with this command
